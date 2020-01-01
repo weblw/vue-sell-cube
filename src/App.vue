@@ -3,7 +3,7 @@
        @touchmove.prevent>
     <v-header :seller='seller'></v-header>
     <div class="tab-wrapper">
-      <tab :tab=tabs></tab>
+      <tab :tab='tabs'></tab>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
       }
     }
   },
-  compouted: {
+  computed: {
     tabs () {
       return [
         {

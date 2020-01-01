@@ -2,7 +2,6 @@
   <span class="support-ico"
         :class="iconCls"></span>
 </template>
-
 <script>
 export default {
   name: 'support-ico',
@@ -20,10 +19,10 @@ export default {
       return `icon-${this.size} ${classMap[this.type]}`
     }
   }
+
 }
 </script>
-
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 @import '~common/stylus/mixin';
 
 .support-ico {
