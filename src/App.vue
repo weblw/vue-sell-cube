@@ -3,7 +3,7 @@
        @touchmove.prevent>
     <v-header :seller='seller'></v-header>
     <div class="tab-wrapper">
-      <tab :tab='tabs'></tab>
+      <tab :tabs='tabs'></tab>
     </div>
   </div>
 </template>
@@ -31,21 +31,21 @@ export default {
       return [
         {
           label: '商品',
-          components: Goods,
+          component: Goods,
           data: {
             seller: this.seller
           }
         },
         {
           label: '评论',
-          components: Ratings,
+          component: Ratings,
           data: {
             seller: this.seller
           }
         },
         {
           label: '商家',
-          components: Seller,
+          component: Seller,
           data: {
             seller: this.seller
           }
