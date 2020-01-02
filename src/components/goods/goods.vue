@@ -2,25 +2,24 @@
   <div class="goods">
     <div class="scroll-nav-wrapper">
       <cube-scroll-nav :side=true
-                       :data='goods'
-                       :options='scrollOptions'
+                       :data="goods"
+                       :options="scrollOptions"
                        v-if="goods.length">
         <template slot="bar"
                   slot-scope="props">
-          <cube-scroll-nav-bar direction='vertical'
-                               :labels='props.labels'
-                               :txts='barTxts'
-                               :current='props.current'>
-            <template slot="bar"
-                      slot-scope="props">
+          <cube-scroll-nav-bar direction="vertical"
+                               :labels="props.labels"
+                               :txts="barTxts"
+                               :current="props.current">
+            <template slot-scope="props">
               <div class="text">
                 <support-ico v-if="props.txt.type>=1"
                              :size=3
-                             :type='props.txt.type'></support-ico>
+                             :type="props.txt.type"></support-ico>
                 <span>{{props.txt.name}}</span>
                 <span class="num"
                       v-if="props.txt.count">
-                  <bubble :num='props.txt.count'></bubble>
+                  <bubble :num="props.txt.count"></bubble>
                 </span>
               </div>
             </template>
@@ -28,7 +27,7 @@
         </template>
         <cube-scroll-nav-panel v-for="good in goods"
                                :key="good.name"
-                               :label='good.name'
+                               :label="good.name"
                                :title="good.name">
           <ul>
             <li @click="selectFood(food)"
@@ -36,10 +35,9 @@
                 :key="food.name"
                 class="food-item">
               <div class="icon">
-                <img :src="food.icon"
-                     width="57"
+                <img width="57"
                      height="57"
-                     alt="">
+                     :src="food.icon">
               </div>
               <div class="content">
                 <h2 class="name">{{food.name}}</h2>
@@ -54,8 +52,8 @@
                         v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cart-control-wrapper">
-                  <cart-control @add='onAdd'
-                                :food=food></cart-control>
+                  <cart-control @add="onAdd"
+                                :food="food"></cart-control>
                 </div>
               </div>
             </li>
@@ -65,12 +63,13 @@
     </div>
     <div class="shop-cart-wrapper">
       <shop-cart ref="shopCart"
-                 :select-foods='selectFoods'
-                 :delivery-price='seller.deliveryPrice'
-                 :min-price='seller.minPrice'></shop-cart>
+                 :select-foods="selectFoods"
+                 :delivery-price="seller.deliveryPrice"
+                 :min-price="seller.minPrice"></shop-cart>
     </div>
   </div>
 </template>
+
 <script>
 import { getGoods } from 'api'
 import CartControl from 'components/cart-control/cart-control'
@@ -78,6 +77,7 @@ import ShopCart from 'components/shop-cart/shop-cart'
 import Food from 'components/food/food'
 import SupportIco from 'components/support-ico/support-ico'
 import Bubble from 'components/bubble/bubble'
+
 export default {
   name: 'goods',
   props: {
@@ -104,8 +104,8 @@ export default {
     },
     selectFoods () {
       let foods = []
-      this.goods.forEach(good => {
-        good.foods.forEach(food => {
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
           if (food.count) {
             foods.push(food)
           }
@@ -115,10 +115,10 @@ export default {
     },
     barTxts () {
       let ret = []
-      this.goods.forEach(good => {
+      this.goods.forEach((good) => {
         const { type, name, foods } = good
         let count = 0
-        foods.forEach(food => {
+        foods.forEach((food) => {
           count += food.count || 0
         })
         ret.push({
@@ -136,7 +136,7 @@ export default {
         this.fetched = true
         getGoods({
           id: this.seller.id
-        }).then(goods => {
+        }).then((goods) => {
           this.goods = goods
         })
       }
@@ -155,11 +155,11 @@ export default {
           food: 'selectedFood'
         },
         $events: {
-          add: target => {
+          add: (target) => {
             this.shopCartStickyComp.drop(target)
           },
           leave: () => {
-            this._hideCartSticky()
+            this._hideShopCartSticky()
           }
         }
       })
@@ -168,7 +168,7 @@ export default {
     _showShopCartSticky () {
       this.shopCartStickyComp = this.shopCartStickyComp || this.$createShopCartSticky({
         $props: {
-          selectFood: 'selectFood',
+          selectFoods: 'selectFoods',
           deliveryPrice: this.seller.deliveryPrice,
           minPrice: this.seller.minPrice,
           fold: true
@@ -176,7 +176,7 @@ export default {
       })
       this.shopCartStickyComp.show()
     },
-    _hideCartSticky () {
+    _hideShopCartSticky () {
       this.shopCartStickyComp.hide()
     }
   },
@@ -189,7 +189,8 @@ export default {
   }
 }
 </script>
-<style lang='stylus' scoped>
+
+<style lang="stylus" scoped>
 @import '~common/stylus/mixin';
 @import '~common/stylus/variable';
 
@@ -199,11 +200,17 @@ export default {
   height: 100%;
 
   .scroll-nav-wrapper {
-    position: relative;
+    position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     bottom: 48px;
+  }
+
+  >>> .cube-scroll-nav-bar {
+    width: 80px;
+    white-space: normal;
+    overflow: hidden;
   }
 
   >>> .cube-scroll-nav-bar-item {
@@ -286,8 +293,12 @@ export default {
       }
 
       .desc {
+        width: 200px;
         line-height: 12px;
         margin-bottom: 8px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .extra {
