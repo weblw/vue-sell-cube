@@ -12,12 +12,12 @@
             </div>
             <div class="num"
                  v-show="totalCount>0">
-              <bubble :num='totalCount'></bubble>
+              <bubble :num="totalCount"></bubble>
             </div>
           </div>
           <div class="price"
                :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
-          <div class="desc">另需配送费￥{{deliveryPrice}}</div>
+          <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
         </div>
         <div class="content-right"
              @click="pay">
@@ -30,9 +30,9 @@
       <div class="ball-container">
         <div v-for="(ball,index) in balls"
              :key="index">
-          <transition @before-enter='beforeDrop'
-                      @enter='dropping'
-                      @after-enter='afterDrop'>
+          <transition @before-enter="beforeDrop"
+                      @enter="dropping"
+                      @after-enter="afterDrop">
             <div class="ball"
                  v-show="ball.show">
               <div class="inner inner-hook"></div>
@@ -43,10 +43,13 @@
     </div>
   </div>
 </template>
+
 <script>
 import Bubble from 'components/bubble/bubble'
+
 const BALL_LEN = 10
 const innerClsHook = 'inner-hook'
+
 function createBalls () {
   let balls = []
   for (let i = 0; i < BALL_LEN; i++) {
@@ -54,6 +57,7 @@ function createBalls () {
   }
   return balls
 }
+
 export default {
   name: 'shop-cart',
   props: {
@@ -77,7 +81,7 @@ export default {
     },
     fold: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {
@@ -92,14 +96,14 @@ export default {
   computed: {
     totalPrice () {
       let total = 0
-      this.selectFoods.forEach(food => {
+      this.selectFoods.forEach((food) => {
         total += food.price * food.count
       })
       return total
     },
     totalCount () {
       let count = 0
-      this.selectFoods.forEach(food => {
+      this.selectFoods.forEach((food) => {
         count += food.count
       })
       return count
@@ -126,7 +130,7 @@ export default {
     toggleList () {
       if (this.listFold) {
         if (!this.totalCount) {
-          return ''
+          return
         }
         this.listFold = false
         this._showShopCartList()
@@ -138,7 +142,7 @@ export default {
     },
     pay (e) {
       if (this.totalPrice < this.minPrice) {
-        return ''
+        return
       }
       this.$createDialog({
         title: '支付',
@@ -150,7 +154,7 @@ export default {
       for (let i = 0; i < this.balls.length; i++) {
         const ball = this.balls[i]
         if (!ball.show) {
-          ball.show = false
+          ball.show = true
           ball.el = el
           this.dropBalls.push(ball)
           return
@@ -159,6 +163,7 @@ export default {
     },
     beforeDrop (el) {
       const ball = this.dropBalls[this.dropBalls.length - 1]
+      // 获取元素大小及相对视口位置
       const rect = ball.el.getBoundingClientRect()
       const x = rect.left - 32
       const y = -(window.innerHeight - rect.top - 22)
@@ -172,7 +177,7 @@ export default {
       el.style.transform = el.style.webkitTransform = `translate3d(0,0,0)`
       const inner = el.getElementsByClassName(innerClsHook)[0]
       inner.style.transform = inner.style.webkitTransform = `translate3d(0,0,0)`
-      el.addEventListener('transition', done)
+      el.addEventListener('transitionend', done)
     },
     afterDrop (el) {
       const ball = this.dropBalls.shift()
@@ -235,6 +240,7 @@ export default {
   }
 }
 </script>
+
 <style lang="stylus" scoped>
 @import '~common/stylus/mixin';
 @import '~common/stylus/variable';

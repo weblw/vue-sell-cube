@@ -3,29 +3,30 @@
     <cube-tab-bar :useTransition=false
                   :showSlider=true
                   v-model="selectedLabel"
-                  :data='tabs'
-                  ref='tabBar'
+                  :data="tabs"
+                  ref="tabBar"
                   class="border-bottom-1px">
     </cube-tab-bar>
     <div class="slide-wrapper">
       <cube-slide :loop=false
                   :auto-play=false
                   :show-dots=false
-                  :initial-index='index'
-                  ref='slide'
-                  :options='slideOptions'
+                  :initial-index="index"
+                  ref="slide"
+                  :options="slideOptions"
                   @scroll="onScroll"
                   @change="onChange">
         <cube-slide-item v-for="(tab,index) in tabs"
                          :key="index">
           <component ref="component"
                      :is="tab.component"
-                     :data='tab.data'></component>
+                     :data="tab.data"></component>
         </cube-slide-item>
       </cube-slide>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'tab',
@@ -57,7 +58,7 @@ export default {
         return this.tabs[this.index].label
       },
       set (newVal) {
-        this.index = this.tabs.findIndex(value => {
+        this.index = this.tabs.findIndex((value) => {
           return value.label === newVal
         })
       }
@@ -83,7 +84,8 @@ export default {
   }
 }
 </script>
-<style lang='stylus' scoped>
+
+<style lang="stylus" scoped>
 @import '~common/stylus/variable';
 
 .tab {

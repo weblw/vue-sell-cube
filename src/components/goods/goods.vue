@@ -293,12 +293,8 @@ export default {
       }
 
       .desc {
-        width: 200px;
         line-height: 12px;
         margin-bottom: 8px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
       }
 
       .extra {

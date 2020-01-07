@@ -10,11 +10,11 @@ export default {
   computed: {
     computedRatings() {
       let ret = []
-      this.computedRatings.forEach(rating => {
+      this.ratings.forEach((rating) => {
         if (this.onlyContent && !rating.text) {
           return
         }
-        if (this.selectType === ALL || rating.type === this.selectType) {
+        if (this.selectType === ALL || rating.rateType === this.selectType) {
           ret.push(rating)
         }
       })

@@ -31,12 +31,15 @@ export default {
       const score = Math.floor(this.score * 2) / 2
       const hasDecimal = score % 1 !== 0
       const integer = Math.floor(score)
+      // 亮星
       for (let i = 0; i < integer; i++) {
         result.push(CLS_ON)
       }
+      // 半颗星
       if (hasDecimal) {
         result.push(CLS_HALF)
       }
+      // 暗星
       while (result.length < LENGTH) {
         result.push(CLS_OFF)
       }

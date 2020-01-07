@@ -13,8 +13,10 @@
          @click.stop="add"></div>
   </div>
 </template>
+
 <script>
 const EVENT_ADD = 'add'
+
 export default {
   name: 'cart-control',
   props: {
@@ -39,7 +41,8 @@ export default {
   }
 }
 </script>
-<style lang='stylus' scoped>
+
+<style lang="stylus" scoped>
 @import '~common/stylus/variable';
 
 .cartcontrol {

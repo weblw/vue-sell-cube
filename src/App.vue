@@ -1,9 +1,9 @@
 <template>
   <div id="app"
        @touchmove.prevent>
-    <v-header :seller='seller'></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab-wrapper">
-      <tab :tabs='tabs'></tab>
+      <tab :tabs="tabs"></tab>
     </div>
   </div>
 </template>
@@ -18,7 +18,6 @@ import Seller from 'components/seller/seller'
 import Tab from 'components/tab/tab'
 
 export default {
-  name: 'app',
   data () {
     return {
       seller: {
@@ -60,7 +59,7 @@ export default {
     _getSeller () {
       getSeller({
         id: this.seller.id
-      }).then(seller => {
+      }).then((seller) => {
         this.seller = Object.assign({}, this.seller, seller)
       })
     }

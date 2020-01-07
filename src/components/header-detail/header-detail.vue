@@ -75,6 +75,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+  // 背景模糊度
   backdrop-filter: blur(10px);
   opacity: 1;
   color: $color-white;
@@ -146,6 +147,7 @@ export default {
 
           .support-ico {
             margin-left: 6px;
+            margin-right: 3px;
           }
 
           .text {
